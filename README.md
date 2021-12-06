@@ -2,12 +2,12 @@
 
 ## Overview
 
-Userstamp extends `ActiveRecord::Base` to add automatic updating of `creator`, `updater`, and 
+Userstamp extends `ActiveRecord::Base` to add automatic updating of `creator`, `updater`, and
 `deleter` attributes. It is based loosely on `ActiveRecord::Timestamp`.
 
 Two class methods (`model_stamper` and `stampable`) are implemented in this gem. The `model_stamper`
 method is used in models that are responsible for creating, updating, or deleting other objects.
-Typically this would be the `User` model of your application. The `stampable` method is used in 
+Typically this would be the `User` model of your application. The `stampable` method is used in
 models that are subject to being created, updated, or deleted by stampers.
 
 ## Forkception
@@ -16,7 +16,7 @@ This is a fork of:
 
  - the [magiclabs-userstamp](https://github.com/magiclabs/userstamp) gem
  - which is a fork of [Michael Grosser's](https://github.com/grosser)
-   [userstamp gem] (https://github.com/grosser/userstamp) 
+   [userstamp gem] (https://github.com/grosser/userstamp)
  - which is a fork of the original [userstamp plugin](https://github.com/delynn/userstamp) by
    [delynn](https://github.com/delynn)
 
@@ -27,7 +27,7 @@ In addition to these, I have cherry picked ideas and changes from the following 
  - [konvenit](https://github.com/konvenit/userstamp)
 
 Finally, this gem only supports Ruby 2.0 and above. Yes, you really should upgrade to a supported
-version of Ruby. This gem is tested only on Rails 4.2; but it should work with Rails 4+.
+version of Ruby. This gem is tested on Rails 4.2, 5.0, 5.1, 5.2, 6.0 and 6.1.
 
 ## Features
 ### Soft-deletes
@@ -38,7 +38,7 @@ following gems:
  - [acts_as_paranoid](https://github.com/ActsAsParanoid/acts_as_paranoid)
  - [paranoia](https://github.com/radar/paranoia)
 
-The `stampable` method has been modified to allow additional arguments to be passed to the 
+The `stampable` method has been modified to allow additional arguments to be passed to the
 creator/updater relations. This allows declarations like:
 
 ```ruby
@@ -51,7 +51,7 @@ to result in a `belongs_to` relation which looks like:
   belongs_to :creator, class_name: '::User', foreign_key: :created_by, with_deleted: true
 ```
 
-Do create a ticket if it is broken, with a pull-request if possible.  
+Do create a ticket if it is broken, with a pull-request if possible.
 
 ### Customisable column names/types
 While examining the userstamp gem's network on Github, it was noticed that quite a few forks were
@@ -73,7 +73,7 @@ Furthermore, the `creator` attribute is set only if the value is blank allowing 
 override.
 
 ## Usage
-Assume that we are building a blog application, with User and Post objects. Add the following 
+Assume that we are building a blog application, with User and Post objects. Add the following
 to the application's Gemfile:
 
 ```ruby
@@ -151,7 +151,7 @@ arguments are passed to the `belongs_to` declaration.
 
 ## Upgrading
 ### Upgrading from delynn's 1.x/2.x with `compatibility_mode`
-The major difference between 1.x and 2.x is the naming of the columns. This version of the gem 
+The major difference between 1.x and 2.x is the naming of the columns. This version of the gem
 allows specifying the name of the column from the gem configuration:
 
 ```ruby
