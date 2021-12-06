@@ -14,24 +14,15 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/lowjoel/activerecord-userstamp'
   s.license  = 'MIT'
 
+  # Minimum version of Ruby that the gem works with
+  s.required_ruby_version = ">= 2.5.0"
+
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  if ENV['CI'] == 'true'
-    rails_version =
-      case ENV['RAILS_VERSION']
-      when nil, ''
-        '>= 4.1'
-      else
-        "~> #{ENV['RAILS_VERSION']}"
-      end
-  else
-    rails_version = '>= 4.1'
-  end
-
-  s.add_dependency 'rails', rails_version
+  s.add_dependency 'rails', '>= 4.2'
 
   s.add_development_dependency 'tzinfo-data' if RUBY_PLATFORM =~ /mswin|mingw/
   s.add_development_dependency 'rake'
@@ -39,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '>= 3.3'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'coveralls'
-  s.add_development_dependency 'codeclimate-test-reporter'
-  s.add_development_dependency 'sqlite3'
+  # s.add_development_dependency 'codeclimate-test-reporter'
+  s.add_development_dependency 'sqlite3', '~> 1.3.0'
+  s.add_development_dependency "appraisal"
 end

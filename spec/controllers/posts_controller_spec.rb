@@ -9,7 +9,11 @@ RSpec.describe PostsController, type: :controller do
   context 'when updating a Post' do
     it 'sets the correct updater' do
       request.session  = { person_id: @delynn.id }
-      post :update, id: @first_post.id, post: { title: 'Different' }
+      if Rails.version.starts_with?('4.')
+        post :update, id: @first_post.id, post: { title: 'Different' }
+      else
+        post :update, params: { id: @first_post.id, post: { title: 'Different' } }
+      end
 
       expect(response.status).to eq(200)
       expect(controller.instance_variable_get(:@post).title).to eq('Different')
@@ -22,7 +26,11 @@ RSpec.describe PostsController, type: :controller do
       old_request_session = request.session
       request.session = { person_id: @nicole.id }
 
-      post :update, id: @first_post.id, post: { title: 'Different Second'}
+      if Rails.version.starts_with?('4.')
+        post :update, id: @first_post.id, post: { title: 'Different Second'}
+      else
+        post :update, params: { id: @first_post.id, post: { title: 'Different Second'} }
+      end
       expect(controller.instance_variable_get(:@post).updater).to eq(@nicole)
     ensure
       request.session = old_request_session
@@ -30,12 +38,20 @@ RSpec.describe PostsController, type: :controller do
 
     it 'sets the correct updater' do
       request.session = { person_id: @delynn.id }
-      get :edit, id: @first_post.id
+      if Rails.version.starts_with?('4.')
+        get :edit, id: @first_post.id
+      else
+        get :edit, params: { id: @first_post.id }
+      end
       expect(response.status).to eq(200)
 
       simulate_second_request
 
-      post :update, id: @first_post.id, post: { title: 'Different' }
+      if Rails.version.starts_with?('4.')
+        post :update, id: @first_post.id, post: { title: 'Different' }
+      else
+        post :update, params: { id: @first_post.id, post: { title: 'Different' } }
+      end
       expect(response.status).to eq(200)
       expect(controller.instance_variable_get(:@post).title).to eq('Different')
       expect(controller.instance_variable_get(:@post).updater).to eq(@delynn)
