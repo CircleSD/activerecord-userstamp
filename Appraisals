@@ -11,6 +11,10 @@
 # Run each appraisal in turn or a single appraisal:-
 # $ bundle exec appraisal rspec
 # $ bundle exec appraisal rails-6-1 rspec
+appraise "rails-6-1" do
+  gem "rails", "~> 6.1"
+  gem "sqlite3", '~> 1.4.0'
+end
 
 appraise "rails-6-0" do
   gem "rails", "~> 6.0.1"

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_attributes(user_params)
+    @user.update(user_params)
     render(inline: "<%= @user.name %>")
   end
 
