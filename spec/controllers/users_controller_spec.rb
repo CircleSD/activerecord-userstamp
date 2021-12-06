@@ -6,7 +6,7 @@ RSpec.describe UsersController, type: :controller do
 
   context 'when updating a User' do
     it 'sets the correct updater' do
-      request.session = { user_id: @hera.id }
+      request.session[:user_id] = @hera.id
       if Rails.version.starts_with?('4.')
         patch :update, id: @hera.id, user: { name: 'Different'}
       else
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
   context 'when handling multiple requests' do
     def simulate_second_request
       old_request_session = request.session
-      request.session = { user_id: @zeus.id }
+      request.session[:user_id] = @zeus.id
 
       if Rails.version.starts_with?('4.')
         post :update, id: @hera.id, user: { name: 'Different Second' }
@@ -35,7 +35,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'sets the correct updater' do
-      request.session = { user_id: @hera.id }
+      request.session[:user_id] = @hera.id
       if Rails.version.starts_with?('4.')
         get :edit, id: @hera.id
       else
@@ -51,7 +51,7 @@ RSpec.describe UsersController, type: :controller do
     before { @stamper = User.stamper }
     it 'restores the correct stamper' do
       begin
-        request.session = { user_id: @zeus.id }
+        request.session[:user_id] = @zeus.id
         post :create
       rescue
       end

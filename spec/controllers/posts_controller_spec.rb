@@ -8,7 +8,7 @@ RSpec.describe PostsController, type: :controller do
 
   context 'when updating a Post' do
     it 'sets the correct updater' do
-      request.session  = { person_id: @delynn.id }
+      request.session[:person_id] = @delynn.id
       if Rails.version.starts_with?('4.')
         post :update, id: @first_post.id, post: { title: 'Different' }
       else
@@ -23,8 +23,8 @@ RSpec.describe PostsController, type: :controller do
 
   context 'when handling multiple requests' do
     def simulate_second_request
-      old_request_session = request.session
-      request.session = { person_id: @nicole.id }
+      old_request_session = request.session[:person_id]
+      request.session[:person_id] = @nicole.id
 
       if Rails.version.starts_with?('4.')
         post :update, id: @first_post.id, post: { title: 'Different Second'}
@@ -33,11 +33,11 @@ RSpec.describe PostsController, type: :controller do
       end
       expect(controller.instance_variable_get(:@post).updater).to eq(@nicole)
     ensure
-      request.session = old_request_session
+      request.session[:person_id] = old_request_session
     end
 
     it 'sets the correct updater' do
-      request.session = { person_id: @delynn.id }
+      request.session[:person_id] = @delynn.id
       if Rails.version.starts_with?('4.')
         get :edit, id: @first_post.id
       else
